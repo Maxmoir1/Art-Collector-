@@ -29,11 +29,25 @@ import { fetchQueryResultsFromTermAndValue } from '../api';
  * finally:
  *  - call setIsLoading, set it to false
  */
-const Searchable = ({searchTerm,searchValue, setIsLoading, setSearchResults}) => {
- 
-  
-  
+const Searchable = (props) => {
+    const [searchTerm] = [props.searchTerm];
+    const [searchValue] = [props.searchValue];
+    const [setIsLoading, setSearchResults] = [props.setIsLoading, props.setSearchResults];
 
+    return <span classname="content">
+        <a href="#" onClick={async (event) => {
+            event.preventDefault();
+            setIsLoading(true);
+            try {
+                const queryResults = await fetchQueryResultsFromTermAndValue({ searchTerm, searchValue });
+                setSearchResults(queryResults);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsLoading(false);
+            }
+        }}>SOME SEARCH TERM</a>
+    </span>
 }
 
 /**
@@ -71,7 +85,31 @@ const Searchable = ({searchTerm,searchValue, setIsLoading, setSearchResults}) =>
  * This component should be exported as default.
  */
 const Feature = (props) => {
-
+    const featuredResult = props.featuredResult;
+    console.log(featuredResult)
+    return <main id="feature">{featuredResult ? <div className="object-feature">
+        <header>
+            <h3>{featuredResult.title}</h3>
+            <h4>{featuredResult.dated}</h4>
+        </header>
+        <section className="facts">
+            <React.Fragment>
+                <span className="title">Culture {featuredResult.culture}</span>
+                <span className="content">Medium {featuredResult.medium}</span>
+            </React.Fragment>
+            <React.Fragment>
+                <span className="title">Dimensions {featuredResult.dimension}</span>
+                <span className="content">Person {[featuredResult.person]}</span>
+            </React.Fragment>
+        </section>
+        {/* <section className="photos" key={featuredResult.images.imageid}>
+            {featuredResult.images.map(image => <img src={images[0].baseimageurl} alt={images[0].alttext} />)}
+         </section> */}
+        {/* <section className="photos">
+           <img src={featuredResult.images.map} alt={[featuredResult.url]} />
+         </section> */}
+    </div>
+        : null}</main>
 }
 
 export default Feature;

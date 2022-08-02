@@ -13,7 +13,8 @@ const Preview = (props) => {
    * 
    * You need info, records, setSearchResults, setFeaturedResult, and setIsLoading as available constants
    */
-
+  const [setSearchResults, setFeaturedResult, setIsLoading] = [props.setSearchResults, props.setFeaturedResult, props.setIsLoading];
+  const [info, record] = [props.searchResults];
 
   /**
    * Don't touch this function, it's good to go.
@@ -36,18 +37,41 @@ const Preview = (props) => {
   return <aside id="preview">
     <header className="pagination">
       {/* This button should be disabled if nothing is set in info.prev, and should call fetchPage with info.prev when clicked */}
-      <button 
-        disabled={} 
+      <button
+        disabled={info.prev}
         className="previous"
-        onClick={}>Previous</button>
+        onClick={info.prev}>Previous</button>
       {/* This button should be disabled if nothing is set in info.next, and should call fetchPage with info.next when clicked */}
       <button
-        disabled={}
+        disabled={info.next}
         className="next"
-        onClick={}>Next</button>
+        onClick={info.next}>Next</button>
     </header>
     <section className="results">
       {
+        props.searchResults.map((record, index) => {
+          return (
+            <div
+              key={index}
+              className="object-preview"
+              onClick={(event) => {
+                event.preventDefault();
+                setFeaturedResult(record);
+                console.log(record);
+                // prevent the default
+                // set the featured result to be this record, using setFeaturedResult
+              }}>
+              {
+                record.primaryimageurl ? <img src={record.primaryimageurl} alt={record.description} /> : null
+                // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing 
+              }
+              {
+                record.title ? <h3>{record.title}</h3> : <h3>MISSING INFO</h3>
+                // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
+              }
+            </div>
+          )
+        })
         /* Here we should map over the records, and render something like this for each one:
           <div  
             key={ index }

@@ -12,16 +12,11 @@
  * Re-export Feature, Loading, Preview, Search, and Title from their respective files
  */
 
+// So as per-usual, comments to help me sort out my own mind in these projects.
+// Project suggests that I export the other components (about 5) from the index.js file, simple enough
 
-//import { Feature} from './Feature.js'
-import { Loading} from './Loading.js'
-//import { Preview} from './Preview.js'
-//import { Search} from './Search.js'
-import { Title} from './Title.js'
-
-//export { default as Feature } from './Feature'
-export { default as Loading} from './Loading'
-//export { default as Preview} from '/Preview'
-//export { default as Search} from './Search'
-export { default as Title} from './Title'
-
+export { default as Feature } from './Feature';
+export { default as Loading } from './Loading';
+export { default as Preview } from './Preview';
+export { default as Search } from './Search';
+export { default as Title } from './Title';
